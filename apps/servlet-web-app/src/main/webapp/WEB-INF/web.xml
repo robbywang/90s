@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+  <display-name>servlet-web-app</display-name>
+  <description>servlet-web-app</description>
+  
+  <!-- <servlet> and <servlet-mapping> entries are handled by the @WebServlet annotation -->
+
+  <!-- Security constraints -->
+  <security-constraint id="securityConstraint_1">
+    <display-name> Security Constraint</display-name>
+    <web-resource-collection id="webResourceCollection_1">
+      <web-resource-name>secure resource</web-resource-name>
+      <url-pattern>/*</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+      <http-method>TRACE</http-method>
+      <http-method>HEAD</http-method>
+      <http-method>CONNECT</http-method>
+    </web-resource-collection><!-- 
+    <auth-constraint>     
+      <role-name>role1</role-name>   
+    </auth-constraint> -->
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>    
+  </security-constraint>
+
+  <!-- Role definitions for authentication -->
+  <security-role id="securityRole_1">
+    <description>servlet-web-app access role</description>
+    <role-name>role1</role-name>
+  </security-role>
+  
+  <!-- Specifying an Authentication Mechanism
+  Tomcat server.xml 中realm的配置， 是读取tomcat-users.xml定义的users and role
+    	 <role rolename="role1"/>
+         <user username="robby" password="robby" roles="role1"/>
+         
+        <Realm className="org.apache.catalina.realm.JDBCRealm"
+               driverName="org.gjt.mm.mysql.Driver"
+               connectionURL="jdbc:mysql://localhost/ddu_database?user=root&amp;password=root"
+               userTable="users" userNameCol="user_name" userCredCol="user_pass"
+               userRoleTable="user_roles" roleNameCol="role_name"/>         
+   -->
+ 
+  <login-config> 
+  	<auth-method>BASIC</auth-method>
+    <realm-name>UserDatabase</realm-name>
+  </login-config>
+
+  <!-- 
+  <login-config>
+      <auth-method>FORM</auth-method>
+      <form-login-config>
+        <form-login-page>/logon.html</form-login-page>
+        <form-error-page>/logonError.html</form-error-page>
+       </form-login-config>
+   </login-config>  
+    -->
+  <!-- 
+  <login-config> 
+  	<auth-method>CLIENT_CERT</auth-method>
+  </login-config>  
+   -->
+  
+</web-app>

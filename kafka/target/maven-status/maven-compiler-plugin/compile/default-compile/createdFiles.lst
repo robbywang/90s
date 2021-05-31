@@ -1,0 +1,10 @@
+kafka/examples/KafkaAdminClient$1.class
+kafka/examples/KafkaAdminClient$Builder.class
+kafka/examples/DemoCallBack.class
+kafka/examples/Consumer.class
+kafka/examples/util/KafkaTopicConfig.class
+kafka/examples/util/KafkaTopicConfig$KafkaTopicConfigBuilder.class
+kafka/examples/util/KafkaProperties.class
+kafka/examples/KafkaAdminClient.class
+kafka/examples/KafkaConsumerProducerDemo.class
+kafka/examples/Producer.class

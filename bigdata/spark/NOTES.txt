@@ -1,0 +1,109 @@
+Tips
+--------
+1.1 不要在 ／etc/hosts  文件设置HostName/IP 映射。
+
+ssh 免密码设置
+--------------
+1. Taos-MacBook-Pro:.ssh hadoop$ ssh-keygen -t rsa
+2. Taos-MacBook-Pro:.ssh hadoop$ scp tao_rsa.pub hadoop@192.168.1.103:/Users/hadoop/.ssh
+3. Taos-MacBook-Pro:.ssh hadoop$ cat -n robby_rsa.pub >> authorized_keys
+4. Edit ~/.ssh/config
+
+Host server  #别名，域名缩写
+HostName sever.com  #完整的域名
+User username  #登录该域名使用的账号名
+IdentityFile ~/.ssh/my_rsa #私钥文件的路径
+
+# 启动sshd服务
+sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+# 停止sshd服务
+sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist
+# 查看是否启动
+sudo launchctl list | grep ssh
+
+Local-Env
+----------
+# 格式化namenode
+hdfs namenode -format
+# 启动 HDFS
+start-dfs.sh
+# 启动 YARN
+start-yarn.sh
+
+# 查看集群
+http://localhost:8088/cluster/nodes
+
+
+
+
+Master-Slave
+-------------
+  Driver/Master : Taos-MacBook-Pro.local   192.168.1.100
+          Slave : RobbysMacBook.local      192.168.1.103
+
+Hadoop Config
+--------------
+  1. Add RobbysMacBook.local or 192.168.1.103 to /etc/hadoop/slaves
+
+192.168.1.103
+
+  2. core-site.xml
+
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://192.168.1.100:9000</value>
+    </property>
+</configuration>
+
+  3. yarn-site.xml
+
+<configuration>
+  <property>
+  <!-- Site specific YARN configuration properties -->
+    <name>yarn.resourcemanager.address</name>
+    <value>192.168.1.100:9777</value>
+  </property>
+  <property>
+   <name>yarn.resourcemanager.scheduler.address</name>
+   <value>192.168.1.100:9030</value>
+  </property>  
+  <property>
+     <name>yarn.resourcemanager.resource-tracker.address</name>
+     <value>192.168.1.100:9035</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.resource.memory-mb</name>
+    <value>2048</value>
+    <description>Amount of physical memory, in MB, that can be allocated for containers.</description>
+  </property>
+  <property>
+    <name>yarn.scheduler.minimum-allocation-mb</name>
+    <value>1024</value>
+  </property>
+</configuration>  
+
+  4. hdfs-site.xml
+
+<configuration>
+  <property>
+      <name>dfs.replication</name>
+      <value>1</value>
+  </property>
+  <property>
+     <name>dfs.namenode.datanode.registration.ip-hostname-check</name>                   
+     <value>false</value>
+  </property>
+   <property>
+    <name>dfs.namenode.secondary.http-address</name>
+    <value>192.168.1.100:9001</value>
+   </property>
+  <property>
+      <name>dfs.safemode.threshold.pct</name>
+      <value>0</value>
+  </property>   
+</configuration>
+
+  5. yarn-env.sh & hadoop-env.sh
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home

@@ -1,0 +1,10 @@
+products:
+   bigdata/spark/src/test/java/ddu/SparkAppLauncher.java -> bigdata/spark/target/test-classes/ddu/SparkAppLauncher.class
+binary dependencies:
+   bigdata/spark/src/test/java/ddu/SparkAppLauncher.java -> /Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/rt.jar
+   bigdata/spark/src/test/java/ddu/SparkAppLauncher.java -> /Users/taowang/.m2/repository/org/apache/spark/spark-launcher_2.11/2.4.4/spark-launcher_2.11-2.4.4.jar
+source dependencies:
+   bigdata/spark/src/test/java/ddu/SparkAppLauncher.java -> bigdata/spark/src/test/java/ddu/SparkAppLauncher.java
+external dependencies:
+class names:
+   bigdata/spark/src/test/java/ddu/SparkAppLauncher.java -> ddu.SparkAppLauncher
